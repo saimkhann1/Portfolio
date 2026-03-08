@@ -1,7 +1,7 @@
 // src/components/SkillsSection.jsx
 import React from 'react';
 import { motion } from 'framer-motion';
-import { skillsData } from '../data/skills.js';
+import { skillsData } from '../data/Skills.jsx';
 
 // Parent Container ki Animation (Yeh control karega ke bachay kaise aayenge)
 const containerVariants = {
