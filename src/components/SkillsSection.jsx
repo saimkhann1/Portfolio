@@ -1,7 +1,7 @@
 // src/components/SkillsSection.jsx
 import React from 'react';
 import { motion } from 'framer-motion';
-import { skillsData } from '../data/skills';
+import { skillsData } from '../data/skills.js';
 
 const containerVariants = {
   hidden: { opacity: 0 },

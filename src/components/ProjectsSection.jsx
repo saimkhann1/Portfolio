@@ -1,7 +1,7 @@
 // src/components/ProjectsSection.jsx
 import React from 'react';
 import ProjectCard from './ProjectCard';
-import { projectsData } from '../data/projects';
+import { projectsData } from '../data/projects.js';
 
 const ProjectsSection = () => {
   return (
