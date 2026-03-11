@@ -8,15 +8,48 @@ const ContactSection = () => {
     email: '',
     message: ''
   });
+  
+  // Status check karne ke liye (Jaise "Sending..." ya "Sent!")
+  const [status, setStatus] = useState('');
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault(); 
-    console.log("Form Data Ready for Laravel:", formData);
-    alert("Message ready to be sent! (Backend connection pending)");
+    setStatus('Sending...');
+
+    // Web3Forms API Data
+    const object = {
+      ...formData,
+      access_key: "09d258f2-d720-415b-a983-655d6b75466a" // <-- YAHAN APNI WEB3FORMS KEY PASTE KAREIN
+    };
+    const json = JSON.stringify(object);
+
+    try {
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json"
+        },
+        body: json
+      });
+      const resData = await res.json();
+
+      if (resData.success) {
+        setStatus('Message Sent Successfully! ✅');
+        setFormData({ name: '', email: '', message: '' }); // Send hone ke baad form khali ho jayega
+        
+        // 3 second baad success message ghayab ho jayega
+        setTimeout(() => setStatus(''), 3000);
+      } else {
+        setStatus('Failed to send message. ❌');
+      }
+    } catch (error) {
+      setStatus('Something went wrong. ❌');
+    }
   };
 
   return (
@@ -59,7 +92,7 @@ const ContactSection = () => {
                   value={formData.name}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 rounded-lg bg-[#181a1b] border border-gray-700 text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all outline-none"
+                  className="w-full px-4 py-3 rounded-lg bg-[#181a1b] border border-gray-700 text-white focus:ring-2 focus:ring-violet-600 focus:border-transparent transition-all outline-none"
                   placeholder="John Doe"
                 />
               </div>
@@ -72,7 +105,7 @@ const ContactSection = () => {
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 rounded-lg bg-[#181a1b] border border-gray-700 text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all outline-none"
+                  className="w-full px-4 py-3 rounded-lg bg-[#181a1b] border border-gray-700 text-white focus:ring-2 focus:ring-violet-600 focus:border-transparent transition-all outline-none"
                   placeholder="john@example.com"
                 />
               </div>
@@ -85,17 +118,25 @@ const ContactSection = () => {
                   onChange={handleChange}
                   required
                   rows="4"
-                  className="w-full px-4 py-3 rounded-lg bg-[#181a1b] border border-gray-700 text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all outline-none resize-none"
+                  className="w-full px-4 py-3 rounded-lg bg-[#181a1b] border border-gray-700 text-white focus:ring-2 focus:ring-violet-600 focus:border-transparent transition-all outline-none resize-none"
                   placeholder="Tell me about your project..."
                 ></textarea>
               </div>
 
               <button 
                 type="submit"
-                className="w-full bg-blue-600 text-white font-bold py-4 rounded-lg hover:bg-blue-700 transition-colors duration-300 shadow-md hover:shadow-lg"
+                disabled={status === 'Sending...'}
+                className="w-full bg-violet-600 text-white font-bold py-4 rounded-lg hover:bg-violet-700 transition-colors duration-300 shadow-md hover:shadow-lg disabled:opacity-50"
               >
-                Send Message
+                {status === 'Sending...' ? 'Sending...' : 'Send Message'}
               </button>
+
+              {/* Message ka feedback */}
+              {status && status !== 'Sending...' && (
+                <p className={`text-center mt-4 font-semibold ${status.includes('Successfully') ? 'text-green-400' : 'text-red-400'}`}>
+                  {status}
+                </p>
+              )}
 
             </form>
           </motion.div>
