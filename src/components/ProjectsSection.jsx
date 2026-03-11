@@ -5,22 +5,18 @@ import { projectsData } from '../data/projects';
 
 const ProjectsSection = () => {
   return (
-    <section id="projects" className="py-20 bg-white">
+    <section id="projects" className="py-20 bg-[#181a1b]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-extrabold text-gray-900 mb-4">Featured Work</h2>
-          <p className="text-xl text-gray-600">Some of the real-world applications I have built.</p>
+          <h2 className="text-4xl font-extrabold text-white mb-4">Featured Work</h2>
+          <p className="text-xl text-gray-400">Some of the real-world applications I have built.</p>
         </div>
 
-        {/* CSS Grid for Layout */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          
-          {/* Mapping the Data */}
           {projectsData.map((project) => (
             <ProjectCard key={project.id} project={project} />
           ))}
-
         </div>
       </div>
     </section>

@@ -8,7 +8,7 @@ import ContactSection from './components/ContactSection';
 function App() {
   return (
     // 'scroll-smooth' ensures that clicking navbar links glides beautifully instead of instantly jumping
-    <div className="bg-gray-50 min-h-screen font-sans text-gray-900 scroll-smooth">
+    <div className="bg-[#181a1b] min-h-screen font-sans text-gray-200 scroll-smooth">
       
       {/* 1. Top Navigation Bar */}
       <Navbar />
@@ -22,7 +22,7 @@ function App() {
       </main>
 
       {/* 3. A Clean, Professional Footer */}
-      <footer className="bg-gray-900 text-white text-center py-8 mt-12">
+      <footer className="bg-[#3333] text-white text-center py-8 mt-12">
         <p className="text-sm text-gray-400">
           Built with React & Tailwind CSS.
         </p>
